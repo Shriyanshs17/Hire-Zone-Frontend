@@ -18,13 +18,9 @@ const Home = () => {
           navigate("/admin/companies");
         }
 
-      },[]);
-      
-      if (user?.role !== 'recruiter' && user) {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useGetAllJobs();
-      }
-      // useGetAllJobs();
+      },[user,navigate]);
+
+      useGetAllJobs();
 
   return (
     <div>
