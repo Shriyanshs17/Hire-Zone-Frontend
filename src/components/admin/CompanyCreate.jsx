@@ -13,6 +13,7 @@ import { setSingleCompany } from "@/redux/companySlice"
 import { useDispatch } from "react-redux"
 
 const CompanyCreate = () => {
+  const token=window.localStorage.getItem("token");
   const navigate=useNavigate();
   const [companyName,setCompanyName]=useState();
   const dispatch=useDispatch();
@@ -22,7 +23,8 @@ const CompanyCreate = () => {
     try {
       const res=await axios.post(`${COMPANY_API_ENDPOINT}/register`,{companyName},{
         headers:{
-          "Content-Type":"application/json"
+          "Content-Type":"application/json",
+          Authorization:token
         },
         withCredentials:true
       });

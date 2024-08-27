@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 
 const Applicants = () => {
+  const token = window.localStorage.getItem("token");
     const params=useParams();
     const dispatch=useDispatch();
     const {applicants}=useSelector(store=>store.application);
@@ -19,7 +20,10 @@ const Applicants = () => {
        {
         // console.log("i am before try");
         try {
-            const res=await axios.get(`${APPLICATION_API_ENDPOINT}/${params.id}/applicants`,{withCredentials:true});
+            const res=await axios.get(`${APPLICATION_API_ENDPOINT}/${params.id}/applicants`, {headers:
+              {
+                Authorization:token
+              },withCredentials:true});
             // console.log(res.data);
                dispatch(setAllApplicants(res.data.job));
         } catch (error) {

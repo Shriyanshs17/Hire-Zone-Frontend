@@ -15,6 +15,7 @@ import { setUser } from "@/redux/authSlice";
 import { toast } from "sonner";
 
 const UpdateProfileDialog = ({open,setOpen}) => {
+    const token = window.localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const { user } = useSelector(store => store.auth);
 
@@ -52,7 +53,8 @@ const UpdateProfileDialog = ({open,setOpen}) => {
           setLoading(true);
           const res = await axios.post(`${USER_API_ENDPOINT}/profile/update`, formData, {
               headers: {
-                  'Content-Type': 'multipart/form-data'
+                  'Content-Type': 'multipart/form-data',
+                  Authorization: token,
               },
               withCredentials: true
           });

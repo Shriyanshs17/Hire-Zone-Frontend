@@ -15,6 +15,7 @@ import { setLoading } from "@/redux/authSlice"
 import useGetCompanyById from "@/hooks/useGetCompanyById"
 
 const CompanySetup = () => {
+ const token=window.localStorage.getItem("token");
   const params=useParams();
   useGetCompanyById(params.id);
   const[input,setInput]=useState(
@@ -56,7 +57,8 @@ const submitHandler =async(e)=>
   try {
     const res=await axios.put(`${COMPANY_API_ENDPOINT}/update/${params.id}`,formData,{
       headers:{
-        'content-Type':'multipart/form-data'
+        'content-Type':'multipart/form-data',
+        Authorization:token
       },
       withCredentials:true
     });

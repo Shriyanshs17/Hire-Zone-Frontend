@@ -23,7 +23,8 @@ import { Loader2 } from "lucide-react";
 // const companyArray = [];
 
 const PostJob = () => {
-  const [input, setInput] = useState({
+  const token=window.localStorage.getItem("token");
+    const [input, setInput] = useState({
     title: "",
     description: "",
     requirements: "",
@@ -54,7 +55,8 @@ const PostJob = () => {
         dispatch(setLoading(true));
         const res=await axios.post(`${JOB_API_ENDPOINT}/post`,input,{
             headers:{
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                Authorization:token,
             },
             withCredentials: true
         });

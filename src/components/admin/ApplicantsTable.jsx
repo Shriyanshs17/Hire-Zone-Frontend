@@ -9,6 +9,7 @@ import { toast } from "sonner";
 const shortListingStatus=['Accepted','Rejected'];
 
 const ApplicantsTable = () => {
+  const token = window.localStorage.getItem("token");
   const {applicants}=useSelector(store=>store.application);
 
   const statusHandler=async (status,id)=>
@@ -16,9 +17,10 @@ const ApplicantsTable = () => {
     try {
       const res=await axios.post(`${APPLICATION_API_ENDPOINT}/status/${id}/update`,{status},
         {
-          withCredentials:true
-        }
-      );
+          headers:
+          {
+            Authorization:token
+          },withCredentials:true});
       if(res.data.success)
       {
         toast.success(res.data.message);

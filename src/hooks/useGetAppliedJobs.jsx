@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 
 const useGetAppliedJobs=()=>{
+    const token = window.localStorage.getItem("token");
     const dispatch=useDispatch();
     
     useEffect(()=>
@@ -12,7 +13,11 @@ const useGetAppliedJobs=()=>{
         const fetchAppliedJobs=async()=>
         {
         try {
-            const res=await axios.get(`${APPLICATION_API_ENDPOINT}/get`,{withCredentials:true});
+            const res=await axios.get(`${APPLICATION_API_ENDPOINT}/get`,{
+                headers:
+                {
+                  Authorization:token
+                },withCredentials:true});
             if(res.data.success)
             {
                 // console.log(res.data);

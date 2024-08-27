@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
 const JobDescription = () => {
+  const token = window.localStorage.getItem("token");
   const params=useParams();
   const jobId=params.id;
   const {singleJob}=useSelector(store=>store.job);
@@ -22,7 +23,11 @@ const JobDescription = () => {
   const applyJobHandler=async ()=>
   {
     try {
-      const res=await axios.get(`${APPLICATION_API_ENDPOINT}/apply/${jobId}`,{withCredentials:true});
+      const res=await axios.get(`${APPLICATION_API_ENDPOINT}/apply/${jobId}`,{
+        headers:
+        {
+          Authorization:token
+        },withCredentials:true});
       if(res.data.success)
       {
         setIsApplied(true); //update the local state
@@ -39,7 +44,11 @@ const JobDescription = () => {
       const fetchSingleJob=async ()=>
         {
           try {
-            const res=await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`,{withCredentials:true});
+            const res=await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`,{
+              headers:
+              {
+                Authorization:token
+              },withCredentials:true});
             if(res.data.success)
             {
                 dispatch(setSingleJob(res.data.job));
@@ -50,7 +59,7 @@ const JobDescription = () => {
         }
       }
       fetchSingleJob();
-    },[jobId,dispatch,user?._id]);
+    },[jobId,dispatch,user?._id,token]);
 
   return (
     <div className="max-w-7xl mx-auto my-10">

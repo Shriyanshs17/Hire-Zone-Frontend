@@ -41,6 +41,7 @@ const dispatch=useDispatch();
           } );
           if (res && res.data && res.data.success) {
             dispatch(setUser(res.data.user));
+            window.localStorage.setItem("token", res.data.token);
             toast.success(res.data.message);
             navigate("/");
           } else {

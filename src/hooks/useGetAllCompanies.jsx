@@ -5,12 +5,17 @@ import  { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 
 const useGetAllCompanies = () => {
+  const token = window.localStorage.getItem("token");
     const dispatch=useDispatch();
     useEffect(()=>{
       const fetchAllCompanies=async ()=>
         {
           try {
-            const res=await axios.get(`${COMPANY_API_ENDPOINT}/get`,{withCredentials:true});
+            const res=await axios.get(`${COMPANY_API_ENDPOINT}/get`,{
+              headers:
+              {
+                Authorization:token
+              },withCredentials:true});
             if(res.data.success)
             {
                 dispatch(setCompanies(res.data.companies));
